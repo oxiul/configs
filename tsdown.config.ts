@@ -8,6 +8,12 @@ export default defineConfig({
 	deps: {
 		neverBundle: true,
 	},
-	entry: ["src/index.ts", "src/hook/install.ts", "src/hook/pre-commit.ts"],
+	entry: [
+		"src/index.ts",
+		"src/bin.ts",
+		"src/workflows/index.ts",
+		"src/hook/install.ts",
+		"src/hook/pre-commit.ts",
+	],
 	publint: true,
 });

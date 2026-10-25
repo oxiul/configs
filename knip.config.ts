@@ -5,5 +5,6 @@ export default getConfig({
 		// What?
 		eslint: false,
 		vitest: false,
+		workspaces: true,
 	},
 });

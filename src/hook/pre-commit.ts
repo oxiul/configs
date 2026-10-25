@@ -1,13 +1,10 @@
 // oxlint-disable no-console
 import { spawn } from "node:child_process";
 
-import { cosmiconfig } from "cosmiconfig";
 import { Listr } from "listr2";
 import type { DefaultRenderer, ListrTaskWrapper, SimpleRenderer } from "listr2";
-import { z } from "zod";
 
-import { moduleName } from "../common";
-import { configSchema } from "../config/schema";
+import { parse } from "../config/parse";
 
 const failedOutputs = new Map<string, string>();
 
@@ -49,15 +46,8 @@ const run = (
 		});
 	});
 
-const explorer = cosmiconfig(moduleName);
-const rawConfig = await explorer.search();
-const parsedConfig = z.safeParse(configSchema, rawConfig?.config);
-if (!parsedConfig.success) {
-	throw new Error(`Validation error: ${parsedConfig.error.message}`);
-}
-
 try {
-	const config = parsedConfig.data;
+	const config = await parse();
 	if (config.preCommitCommands && config.preCommitCommands.length !== 0) {
 		const tasks = new Listr<
 			unknown,

@@ -7,7 +7,7 @@ export default getConfig({
 	},
 	overrides: [
 		{
-			files: ["src/hook/**"],
+			files: ["src/hook/**", "src/bin.ts"],
 			rules: {
 				"node/no-top-level-await": "off",
 			},
@@ -21,12 +21,18 @@ export default getConfig({
 				"unicorn/no-process-exit": "off",
 			},
 		},
+		{
+			files: ["src/workflows/**"],
+			rules: {
+				"no-template-curly-in-string": "off",
+			},
+		},
 	],
 	rules: {
 		// We'll migrate to a namespace later
 		"import/no-relative-parent-imports": "off",
 	},
 	serverSide: {
-		files: ["src/**", "scripts/**"],
+		files: ["src/**", "scripts/**", "*.config.ts"],
 	},
 });

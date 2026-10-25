@@ -689,6 +689,13 @@ const getBaseConfig = (): MergableConfig => ({
 				"typescript/triple-slash-reference": "off",
 			},
 		} satisfies NonNullable<OxlintConfig["overrides"]>[number],
+		{
+			files: ["workflows.config.ts"],
+			rules: {
+				// There are custom interpolations inside github workflows
+				"eslint/no-template-curly-in-string": "off",
+			},
+		},
 	],
 	plugins: {
 		eslint: true,

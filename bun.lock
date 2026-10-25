@@ -5,9 +5,13 @@
     "": {
       "name": "@oxiul/configs",
       "dependencies": {
+        "@crustjs/core": "^0.5.6",
+        "@crustjs/extensions": "^0.5.6",
+        "@github-actions-workflow-ts/lib": "^2.6.1",
         "cosmiconfig": "^10.0.1",
         "listr2": "^11.4.0",
         "oxlint-plugin-eslint": "^1.88.0",
+        "yaml": "^2.9.1",
         "zod": "^4.6.7",
       },
       "devDependencies": {
@@ -85,6 +89,16 @@
 
     "@clack/prompts": ["@clack/prompts@1.8.1", "", { "dependencies": { "@clack/core": "1.5.1", "fast-string-width": "^3.0.2", "fast-wrap-ansi": "^0.2.0", "sisteransi": "^1.0.5" } }, "sha512-dlT1m5e/0yUL0kRNcQn7yGLVThkgbB0Ga/1AmfDDC/8ik6AIiSf2QLQO2zPYvefsHP0aFgxO93cVLCCfDp7kzQ=="],
 
+    "@crustjs/core": ["@crustjs/core@0.5.6", "", { "dependencies": { "@crustjs/utils": "^0.2.2" }, "peerDependencies": { "typescript": "^7.0.0" }, "optionalPeers": ["typescript"] }, "sha512-aO4lGVjZ+Ix25NBRs5FC81/O2tnGeQANaheN2t3AMwq+FzU082sogLvp/Yg9sAdbk3D9pKb0Ro17w/bILvmvjg=="],
+
+    "@crustjs/extensions": ["@crustjs/extensions@0.5.6", "", { "dependencies": { "@crustjs/store": "^0.4.4", "@crustjs/style": "^0.3.6", "@crustjs/utils": "^0.2.2" }, "peerDependencies": { "@crustjs/core": "^0.5.6", "typescript": "^7.0.0" }, "optionalPeers": ["typescript"] }, "sha512-VIeis+AXac3D9XqFoqJCEFsdhvk2eOFa2E0X9GulP9YYPTjPrBcqCC4ub9vL7PC1nFSS2ySupett/x+3A2vPvA=="],
+
+    "@crustjs/store": ["@crustjs/store@0.4.4", "", { "dependencies": { "@crustjs/utils": "^0.2.2" }, "peerDependencies": { "typescript": "^7.0.0" }, "optionalPeers": ["typescript"] }, "sha512-1QsPZDFXnMYAMpTPexjLVrAwXOJJUVqCiyikt6/PwftSypyBiT1JPA347yzBQhnqwJJsn/yFMTcjqlLQ7064cg=="],
+
+    "@crustjs/style": ["@crustjs/style@0.3.6", "", { "peerDependencies": { "typescript": "^7.0.0" }, "optionalPeers": ["typescript"] }, "sha512-49iRAWUYTL2NJUTVFJkOQbWgWclRMM44R6a7gQ1UasTz6i3Sad1xCqseCA8LrH6lwNatluXr3pv+rUCJQkK9Fg=="],
+
+    "@crustjs/utils": ["@crustjs/utils@0.2.2", "", {}, "sha512-hPDqqHpdekLi8nU/eqQf0fsAbkjsBzGntTcQdypElinREA+tC2iC8JnXPsf8iKYWNogmJJ2tyqGzTXZrk431Kg=="],
+
     "@dual-bundle/import-meta-resolve": ["@dual-bundle/import-meta-resolve@4.2.1", "", {}, "sha512-id+7YRUgoUX6CgV0DtuhirQWodeeA7Lf4i2x71JS/vtA5pRb/hIGWlw+G6MeXvsM+MXrz0VAydTGElX1rAfgPg=="],
 
     "@emnapi/core": ["@emnapi/core@1.11.2", "", { "dependencies": { "@emnapi/wasi-threads": "1.2.2", "tslib": "^2.4.0" } }, "sha512-TC8MkTuZUtcTSiFeuC0ksCh9QIJ5+F21MvZ4Wn4ORfYaFJ/0dsiudv5tVkejgwZlwQ39jL9WWDe2lz8x0WglOA=="],
@@ -108,6 +122,8 @@
     "@eslint/object-schema": ["@eslint/object-schema@3.0.5", "", {}, "sha512-vqTaUEgxzm+YDSdElad6PiRoX4t8VGDjCtt05zn4nU810UIx/uNEV7/lZJ6KwFThKZOzOxzXy48da+No7HZaMw=="],
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.7.3", "", { "dependencies": { "@eslint/core": "^1.2.1", "levn": "^0.4.1" } }, "sha512-IkO+/KEUvwbVpiURZg+P7zF74z5Jxe0UgJxVni+RtoHQ6IZieXaO02kmadomap/q+l6bc/jdPGGqTjhuZnuz1Q=="],
+
+    "@github-actions-workflow-ts/lib": ["@github-actions-workflow-ts/lib@2.6.1", "", {}, "sha512-ZF0UyXWGETs3wOqwxFL+eOo0nhIzY7GsFDlfvDNrUoQmrHWAVDvBL11yMJBsHUn/XePol1Gh5KXf0CCJkNBhOA=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.2", "", { "dependencies": { "@humanfs/types": "^0.15.0" } }, "sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA=="],
 
