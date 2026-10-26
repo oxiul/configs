@@ -1,5 +1,13 @@
 # @oxiul/configs
 
+## 0.4.0
+
+### Minor Changes
+
+- [`2b0a49d`](https://github.com/oxiul/configs/commit/2b0a49dbe64148514bd575980cd27ccb7d477f81) Thanks [@luixo](https://github.com/luixo)! - Workflows generation added
+
+- [`a0ef675`](https://github.com/oxiul/configs/commit/a0ef6753b7e5e5e0a09536f6840c9d69218be71f) Thanks [@luixo](https://github.com/luixo)! - Added package.json verification
+
 ## 0.3.2
 
 ### Patch Changes
