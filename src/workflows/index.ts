@@ -8,6 +8,7 @@ export {
 	getSetupAction,
 	getTypecheckJob,
 	getWorkflowsVerifyJob,
+	getPackageJsonVerifyJob,
 } from "./default";
 export type { CompositeAction, Workflow } from "./types";
 export type { GeneratedWorkflowTypes } from "./generate";

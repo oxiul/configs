@@ -5,5 +5,5 @@ export {
 } from "./oxlint.ts";
 export { getConfig as getFormatConfig } from "./oxfmt.ts";
 export { getConfig as getKnipConfig } from "./knip.ts";
-export type { Config } from "./config/schema.ts";
+export type { ConfigOutput, ConfigInput as Config } from "./config/schema.ts";
 export { configSchema } from "./config/schema.ts";

@@ -38,6 +38,13 @@ jobs:
       - uses: ./.github/actions/setup-env
       - run: bun run typecheck
     name: Typecheck
+  verify:
+    runs-on: ubuntu-26.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-env
+      - run: bun run oxiul:verify
+    name: Package.json verification
   workflows:
     runs-on: ubuntu-26.04
     steps:

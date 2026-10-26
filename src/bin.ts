@@ -2,9 +2,11 @@
 import { Crust } from "@crustjs/core";
 import { help } from "@crustjs/extensions";
 
+import { command as verify } from "./verify/bin";
 import { command as workflows } from "./workflows/bin";
 
 const app = new Crust("oxiul", { description: "Oxiul runner" })
+	.add(verify)
 	.add(workflows)
 	.extend(help());
 

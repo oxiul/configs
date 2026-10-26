@@ -100,3 +100,8 @@ export const getWorkflowsVerifyJob = () =>
 		name: "Workflows verification",
 		steps: [{ run: "bun run workflows" }],
 	});
+export const getPackageJsonVerifyJob = () =>
+	getCheckJob({
+		name: "Package.json verification",
+		steps: [{ run: "bun run oxiul:verify" }],
+	});

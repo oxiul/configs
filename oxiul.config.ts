@@ -1,13 +1,21 @@
-import type { Config } from "./src/config/schema";
-import { getCheckJob } from "./src/workflows";
+import type { ConfigInput } from "./src/config/schema";
+import { getCheckJob } from "./src/workflows/default.ts";
 
-const config: Config = {
+const config: ConfigInput = {
 	preCommitCommands: [
 		"bun install --frozen-lockfile",
 		"bun typecheck",
 		"bun lint",
 		"bun format:verify",
+		"bun oxiul:verify",
 	],
+	verify: {
+		scripts: {
+			"oxiul:verify": "bun src/bin.ts verify",
+			workflows: "bun src/bin.ts workflows --verify",
+			"workflows:generate": "bun src/bin.ts workflows --generate",
+		},
+	},
 	workflows: {
 		workflows: [
 			{
