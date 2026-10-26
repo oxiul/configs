@@ -1,7 +1,7 @@
 import type { OxlintConfig } from "oxlint";
-import { isNonNullish } from "remeda";
 
 import { baseIgnorePatterns } from "./common.ts";
+import { isNonNullish } from "./utils.ts";
 
 export const disabledRules: OxlintConfig["rules"] = {
 	// We don't care that much

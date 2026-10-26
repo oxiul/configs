@@ -1,7 +1,6 @@
 import type { KnipConfig as MaybeFunctionKnipConfig } from "knip";
-import { isNonNullish, mapValues, omitBy } from "remeda";
 
-import { arraify } from "./common.ts";
+import { arraify, isNonNullish, mapValues, omitBy } from "./utils.ts";
 
 // We need to use Function here for Exclude
 // oxlint-disable-next-line typescript/ban-types typescript/no-unsafe-function-type
