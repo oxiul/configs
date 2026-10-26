@@ -1,5 +1,11 @@
 # @oxiul/configs
 
+## 0.4.1
+
+### Patch Changes
+
+- [`83746d4`](https://github.com/oxiul/configs/commit/83746d4525abb231e50d95d499617bbaa543ab9e) Thanks [@luixo](https://github.com/luixo)! - Remove remeda from deps
+
 ## 0.4.0
 
 ### Minor Changes
