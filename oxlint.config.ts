@@ -1,4 +1,4 @@
-import { getConfig } from "./src/oxlint.ts";
+import { getConfig } from "./packages/configs/src/oxlint.ts";
 
 export default getConfig({
 	env: {
@@ -7,13 +7,13 @@ export default getConfig({
 	},
 	overrides: [
 		{
-			files: ["src/hook/**", "src/bin.ts"],
+			files: ["packages/configs/src/hook/**", "packages/configs/src/bin.ts"],
 			rules: {
 				"node/no-top-level-await": "off",
 			},
 		},
 		{
-			files: ["scripts/postinstall.mjs"],
+			files: ["packages/configs/scripts/postinstall.mjs"],
 			rules: {
 				"node/no-process-env": "off",
 				"node/no-sync": "off",
@@ -22,7 +22,7 @@ export default getConfig({
 			},
 		},
 		{
-			files: ["src/workflows/**"],
+			files: ["packages/configs/src/workflows/**"],
 			rules: {
 				"no-template-curly-in-string": "off",
 			},
@@ -33,6 +33,6 @@ export default getConfig({
 		"import/no-relative-parent-imports": "off",
 	},
 	serverSide: {
-		files: ["src/**", "scripts/**", "*.config.ts"],
+		files: ["packages/**", "scripts/**", "*.config.ts"],
 	},
 });

@@ -1,67 +1,20 @@
-# Configs
+# Configs and utilities
 
-## Lint config
+This repository uses Bun workspaces:
 
-A shared config for oxlint
+- [`packages/configs`](packages/configs): `@oxiul/configs`, the shared configs and CLI.
+- [`packages/utils`](packages/utils): `@oxiul/utils`, standalone ESM utilities.
 
-## Format config
+Each package has its own dependencies, exports, build, and Changesets release.
+Shared development tools and the lockfile live at the repository root.
 
-A shared config for oxfmt
+Use the Node.js and Bun versions declared in the root `package.json`.
+Run `bun install`, then `bun run build` to build both packages, or
+`bun run --filter @oxiul/utils build` to build just utils.
 
-## GitHub Actions
+`bun run test` builds both packages and verifies utility behavior and consumer
+tree-shaking: importing `sum` removes the other utility and all Remeda code;
+importing `uniqueNonNullish` keeps only the Remeda helpers it uses.
 
-Configure generation in `oxiul.config.ts`:
-
-```ts
-import type { Config } from "@oxiul/configs";
-
-export default {
-	workflows: {
-		workflows: [], // Optional { name, workflow } objects for project workflows.
-		jobs: {}, // Optional { jobName: <job> } object with CI jobs descriptions.
-	},
-} satisfies Config;
-```
-
-## Package.json verification
-
-Run `oxiul verify` to require a pinned Bun version of at least 1.4.4,
-a Node.js engine range starting at 26 or higher, and these exact scripts:
-
-```json
-{
-	"lint": "oxlint",
-	"lint:fix": "oxlint --fix",
-	"format": "oxfmt --write",
-	"format:verify": "oxfmt --check",
-	"workflows": "oxiul workflows --verify",
-	"workflows:generate": "oxiul workflows --generate",
-	"typecheck": "bun check",
-	"deps": "knip",
-	"oxiul:verify": "oxiul verify"
-}
-```
-
-Add requirements or override commands in `oxiul.config.ts`:
-
-```ts
-export default {
-	verify: {
-		scripts: {
-			build: "bun build src/index.ts",
-			test: "*", // Required script, any command.
-			lint: "oxlint --deny-warnings",
-		},
-	},
-} satisfies Config;
-```
-
-Other scripts are allowed and left unchecked. Verification reads `package.json`
-from the current directory and never modifies it.
-
-## Development
-
-### Prerequisites
-
-- Node.js (from `engines.node` field in `package.json`)
-- Bun (from `packageManager` field in `package.json`)
+Remeda stays external in the published library build. Consumers' ESM bundlers
+perform tree-shaking; Node.js imports alone do not remove unused code.

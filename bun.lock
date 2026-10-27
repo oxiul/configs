@@ -3,22 +3,12 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "@oxiul/configs",
-      "dependencies": {
-        "@crustjs/core": "^0.5.6",
-        "@crustjs/extensions": "^0.5.6",
-        "@github-actions-workflow-ts/lib": "^2.6.1",
-        "cosmiconfig": "^10.0.1",
-        "listr2": "^11.4.0",
-        "oxlint-plugin-eslint": "^1.88.0",
-        "semver": "^7.8.5",
-        "yaml": "^2.9.1",
-        "zod": "^4.6.7",
-      },
+      "name": "@oxiul/workspace",
       "devDependencies": {
         "@arethetypeswrong/core": "^0.18.5",
         "@changesets/changelog-github": "^1.0.1",
         "@changesets/cli": "^3.0.3",
+        "@oxiul/utils": "workspace:*",
         "@tanstack/eslint-plugin-router": "^1.162.0",
         "@types/bun": "1.4.3",
         "@types/semver": "^7.8.0",
@@ -28,14 +18,42 @@
         "knip": "^6.42.0",
         "oxfmt": "^0.73.0",
         "oxlint": "^1.88.0",
+        "oxlint-plugin-eslint": "^1.88.0",
         "oxlint-tsgolint": "^7.0.2004",
         "publint": "^0.3.25",
+        "remeda": "^2.54.1",
         "tsdown": "^0.23.1",
+      },
+    },
+    "packages/configs": {
+      "name": "@oxiul/configs",
+      "version": "0.4.1",
+      "bin": {
+        "oxiul": "./dist/bin.mjs",
+      },
+      "dependencies": {
+        "@crustjs/core": "^0.5.6",
+        "@crustjs/extensions": "^0.5.6",
+        "@github-actions-workflow-ts/lib": "^2.6.1",
+        "cosmiconfig": "^10.0.1",
+        "listr2": "^11.4.0",
+        "oxlint-plugin-eslint": "^1.88.0",
+        "remeda": "^2.54.1",
+        "semver": "^7.8.5",
+        "yaml": "^2.9.1",
+        "zod": "^4.6.7",
       },
       "peerDependencies": {
         "knip": "^6.42.0",
         "oxfmt": "^0.73.0",
         "oxlint": "^1.88.0",
+      },
+    },
+    "packages/utils": {
+      "name": "@oxiul/utils",
+      "version": "0.0.0",
+      "dependencies": {
+        "remeda": "^2.54.1",
       },
     },
   },
@@ -265,6 +283,10 @@
     "@oxfmt/binding-win32-ia32-msvc": ["@oxfmt/binding-win32-ia32-msvc@0.73.0", "", { "os": "win32", "cpu": "ia32" }, "sha512-QJPUsbgUb97ZPPMkFUq6VQq0fLhC4Np19KL9aB/qKVwXnpKE6MIiILXqzhKnQ/UbnEDjKJ7Xv1d6zH4bYPCUdQ=="],
 
     "@oxfmt/binding-win32-x64-msvc": ["@oxfmt/binding-win32-x64-msvc@0.73.0", "", { "os": "win32", "cpu": "x64" }, "sha512-cGcze2fu+ykIaFtkEvZlkZ3HvnCLk+WISthtq99zWTWn0x13t5L9TxvGdLZMUMvtfYR+ICkiCwKnguVubdcw0w=="],
+
+    "@oxiul/configs": ["@oxiul/configs@workspace:packages/configs"],
+
+    "@oxiul/utils": ["@oxiul/utils@workspace:packages/utils"],
 
     "@oxlint-tsgolint/darwin-arm64": ["@oxlint-tsgolint/darwin-arm64@7.0.2004", "", { "os": "darwin", "cpu": "arm64" }, "sha512-uJk3ttju7Lz+Nv8WG4CsLyewoL1qf/Ny8S8OksJ7Bm/F14Tc9gMfW6arM1PCc57IzH/X/I79YsCWTgxX1FKibQ=="],
 
@@ -669,6 +691,8 @@
     "qified": ["qified@0.10.1", "", { "dependencies": { "hookified": "^2.1.1" } }, "sha512-+Owyggi9IxT1ePKGafcI87ubSmxol6smwJ+RAHDQlx9+9cPwFWDiKFFCPuWhr9ignlGpZ9vDQLw67N4dcTVFEA=="],
 
     "quansync": ["quansync@1.0.0", "", {}, "sha512-5xZacEEufv3HSTPQuchrvV6soaiACMFnq1H8wkVioctoH3TRha9Sz66lOxRwPK/qZj7HPiSveih9yAyh98gvqA=="],
+
+    "remeda": ["remeda@2.54.1", "", {}, "sha512-l3pxw2Hz5V2FG3RaU9C6z121H8dF5VYjj3z6lnHoN3SCRLoxr+pZS2dq8dDe3NA+9kyKm56A1BB2Ejr+DrLlJw=="],
 
     "resolve-pkg-maps": ["resolve-pkg-maps@1.0.0", "", {}, "sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw=="],
 

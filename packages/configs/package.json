@@ -1,0 +1,58 @@
+{
+	"name": "@oxiul/configs",
+	"version": "0.4.1",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/oxiul/configs.git",
+		"directory": "packages/configs"
+	},
+	"bin": {
+		"oxiul": "./dist/bin.mjs"
+	},
+	"files": [
+		"dist/**",
+		"scripts/postinstall.mjs"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"main": "./dist/index.mjs",
+	"module": "./dist/index.mjs",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.mts",
+			"default": "./dist/index.mjs"
+		},
+		"./workflows": {
+			"types": "./dist/workflows/index.d.mts",
+			"default": "./dist/workflows/index.mjs"
+		}
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"postinstall": "node scripts/postinstall.mjs"
+	},
+	"dependencies": {
+		"@crustjs/core": "^0.5.6",
+		"@crustjs/extensions": "^0.5.6",
+		"@github-actions-workflow-ts/lib": "^2.6.1",
+		"cosmiconfig": "^10.0.1",
+		"listr2": "^11.4.0",
+		"oxlint-plugin-eslint": "^1.88.0",
+		"remeda": "^2.54.1",
+		"semver": "^7.8.5",
+		"yaml": "^2.9.1",
+		"zod": "^4.6.7"
+	},
+	"peerDependencies": {
+		"knip": "^6.42.0",
+		"oxfmt": "^0.73.0",
+		"oxlint": "^1.88.0"
+	},
+	"engines": {
+		"node": "26"
+	}
+}

@@ -1,5 +1,5 @@
-import type { ConfigInput } from "./src/config/schema";
-import { getCheckJob } from "./src/workflows/default.ts";
+import type { ConfigInput } from "./packages/configs/src/config/schema";
+import { getCheckJob } from "./packages/configs/src/workflows/default.ts";
 
 const config: ConfigInput = {
 	preCommitCommands: [
@@ -11,12 +11,19 @@ const config: ConfigInput = {
 	],
 	verify: {
 		scripts: {
-			"oxiul:verify": "bun src/bin.ts verify",
-			workflows: "bun src/bin.ts workflows --verify",
-			"workflows:generate": "bun src/bin.ts workflows --generate",
+			"oxiul:verify": "bun packages/configs/src/bin.ts verify",
+			workflows: "bun packages/configs/src/bin.ts workflows --verify",
+			"workflows:generate":
+				"bun packages/configs/src/bin.ts workflows --generate",
 		},
 	},
 	workflows: {
+		jobs: {
+			test: getCheckJob({
+				name: "Build and test",
+				steps: [{ run: "bun run test" }],
+			}),
+		},
 		workflows: [
 			{
 				concurrency: {

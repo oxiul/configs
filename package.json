@@ -1,64 +1,35 @@
 {
-	"name": "@oxiul/configs",
-	"version": "0.4.1",
+	"name": "@oxiul/workspace",
+	"private": true,
 	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/oxiul/configs.git"
 	},
-	"bin": {
-		"oxiul": "./dist/bin.mjs"
-	},
-	"files": [
-		"dist/**",
-		"scripts/postinstall.mjs"
+	"workspaces": [
+		"packages/*"
 	],
 	"type": "module",
-	"sideEffects": false,
-	"main": "./dist/index.mjs",
-	"module": "./dist/index.mjs",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.mts",
-			"default": "./dist/index.mjs"
-		},
-		"./workflows": {
-			"types": "./dist/workflows/index.d.mts",
-			"default": "./dist/workflows/index.mjs"
-		}
-	},
-	"publishConfig": {
-		"access": "public"
-	},
 	"scripts": {
-		"build": "tsdown",
+		"build": "bun run --workspaces build",
 		"changeset": "changeset add",
 		"deps": "knip",
 		"format": "oxfmt --write",
 		"format:verify": "oxfmt --check",
 		"lint": "oxlint",
 		"lint:fix": "oxlint --fix",
-		"oxiul:verify": "bun src/bin.ts verify",
-		"postinstall": "node scripts/postinstall.mjs",
+		"oxiul:verify": "bun packages/configs/src/bin.ts verify",
+		"postinstall": "node packages/configs/scripts/postinstall.mjs",
+		"test": "bun run build && bun test",
 		"typecheck": "bun check",
-		"workflows": "bun src/bin.ts workflows --verify",
-		"workflows:generate": "bun src/bin.ts workflows --generate"
-	},
-	"dependencies": {
-		"@crustjs/core": "^0.5.6",
-		"@crustjs/extensions": "^0.5.6",
-		"@github-actions-workflow-ts/lib": "^2.6.1",
-		"cosmiconfig": "^10.0.1",
-		"listr2": "^11.4.0",
-		"oxlint-plugin-eslint": "^1.88.0",
-		"semver": "^7.8.5",
-		"yaml": "^2.9.1",
-		"zod": "^4.6.7"
+		"workflows": "bun packages/configs/src/bin.ts workflows --verify",
+		"workflows:generate": "bun packages/configs/src/bin.ts workflows --generate"
 	},
 	"devDependencies": {
 		"@arethetypeswrong/core": "^0.18.5",
 		"@changesets/changelog-github": "^1.0.1",
 		"@changesets/cli": "^3.0.3",
+		"@oxiul/utils": "workspace:*",
 		"@tanstack/eslint-plugin-router": "^1.162.0",
 		"@types/bun": "1.4.3",
 		"@types/semver": "^7.8.0",
@@ -68,14 +39,11 @@
 		"knip": "^6.42.0",
 		"oxfmt": "^0.73.0",
 		"oxlint": "^1.88.0",
+		"oxlint-plugin-eslint": "^1.88.0",
 		"oxlint-tsgolint": "^7.0.2004",
 		"publint": "^0.3.25",
+		"remeda": "^2.54.1",
 		"tsdown": "^0.23.1"
-	},
-	"peerDependencies": {
-		"knip": "^6.42.0",
-		"oxfmt": "^0.73.0",
-		"oxlint": "^1.88.0"
 	},
 	"engines": {
 		"node": "26"
