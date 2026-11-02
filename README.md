@@ -8,6 +8,10 @@ A shared config for oxlint
 
 A shared config for oxfmt
 
+## Knip config
+
+In `knip.config.ts`, use `ignoreIfPresent` for optional files or directories
+
 ## GitHub Actions
 
 Configure generation in `oxiul.config.ts`:

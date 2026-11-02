@@ -1,3 +1,5 @@
+import { glob } from "node:fs/promises";
+
 import type { KnipConfig as MaybeFunctionKnipConfig } from "knip";
 
 import { arraify, isNonNullish, mapValues, omitBy } from "./utils.ts";
@@ -73,9 +75,6 @@ const getBaseConfig = ({
 	({
 		entry: workspaces ? [] : ["**/*.config.ts"],
 		ignore: [
-			// .history for local development
-			// oxlint-disable-next-line node/no-process-env
-			process.env.CI ? undefined : ".history/**",
 			// Opencode is always ignored
 			opencode ? ".opencode/**" : undefined,
 		].filter(isNonNullish),
@@ -116,17 +115,31 @@ const getBaseConfig = ({
 			: {},
 	}) satisfies MergableConfig;
 
+const getIgnoredConfig = async (ignoreIfPresent: string[]) => {
+	const optionalIgnores = await Promise.all(
+		[".history/**", ...ignoreIfPresent].map(async (pattern) => {
+			const matches = await Array.fromAsync(glob(pattern));
+			return matches.length === 0 ? undefined : pattern;
+		}),
+	);
+	return {
+		ignore: optionalIgnores.filter(isNonNullish),
+	} satisfies MergableConfig;
+};
+
 type ConfigOptions = {
 	options?: BaseOptions;
+	ignoreIfPresent?: string[];
 } & MergableConfig;
-export const getConfig = async (
-	{ options, ...overrides }: ConfigOptions = {},
-	// We may want to make config async later
-	// oxlint-disable-next-line typescript/require-await
-): Promise<KnipConfig> => {
+export const getConfig = async ({
+	options,
+	ignoreIfPresent = [],
+	...overrides
+}: ConfigOptions = {}): Promise<KnipConfig> => {
 	const baseConfig = getBaseConfig(options);
 	const { include: includeRecord = {}, ...mergedConfig } = mergeConfigs(
 		baseConfig,
+		await getIgnoredConfig(ignoreIfPresent),
 		overrides,
 	);
 
