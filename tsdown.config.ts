@@ -10,6 +10,7 @@ export default defineConfig({
 	},
 	entry: [
 		"src/index.ts",
+		"src/knip-preprocessor.ts",
 		"src/bin.ts",
 		"src/workflows/index.ts",
 		"src/hook/install.ts",

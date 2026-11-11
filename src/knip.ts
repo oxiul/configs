@@ -1,4 +1,6 @@
 import { glob } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import type { KnipConfig as MaybeFunctionKnipConfig } from "knip";
 
@@ -12,51 +14,110 @@ type MergableConfig = Omit<KnipConfig, "include"> & {
 		Record<NonNullable<KnipConfig["include"]>[number], boolean>
 	>;
 };
-const mergeConfigs = (...configs: MergableConfig[]) =>
-	configs.reduce<MergableConfig>(
-		(
-			{
-				include,
-				ignore,
-				ignoreDependencies,
-				entry,
-				ignoreIssues,
-				workspaces = {},
-				...rest
-			},
-			{
-				include: configInclude,
-				ignore: configIgnore,
-				ignoreDependencies: configIgnoreDependencies,
-				entry: configEntry,
-				ignoreIssues: configIgnoreIssues,
-				workspaces: configWorkspaces = {},
-				...configRest
-			},
-		) => ({
-			entry: [...arraify(entry), ...arraify(configEntry)],
-			ignore: [...arraify(ignore), ...arraify(configIgnore)],
-			ignoreDependencies: [
-				...arraify(ignoreDependencies),
-				...arraify(configIgnoreDependencies),
-			],
-			ignoreIssues: {
-				...ignoreIssues,
-				...configIgnoreIssues,
-			},
-			include: { ...include, ...configInclude },
-			workspaces: {
-				...mapValues(workspaces, (workspace, key) => ({
-					...workspace,
-					...configWorkspaces[key],
-				})),
-				...omitBy(configWorkspaces, (_value, key) => Boolean(workspaces[key])),
-			},
-			...rest,
-			...configRest,
-		}),
-		{},
-	);
+
+const mergeConfigs = (...configs: MergableConfig[]): KnipConfig => {
+	const { include: mergedInclude = {}, ...mergedConfig } =
+		configs.reduce<MergableConfig>(
+			(
+				{
+					include,
+					ignore,
+					ignoreDependencies,
+					ignoreFiles,
+					ignoreBinaries,
+					ignoreMembers,
+					ignoreUnresolved,
+					ignoreWorkspaces,
+					entry,
+					ignoreIssues,
+					workspaces = {},
+					...rest
+				},
+				{
+					include: configInclude,
+					ignore: configIgnore,
+					ignoreDependencies: configIgnoreDependencies,
+					ignoreFiles: configIgnoreFiles,
+					ignoreBinaries: configIgnoreBinaries,
+					ignoreMembers: configIgnoreMembers,
+					ignoreUnresolved: configIgnoreUnresolved,
+					ignoreWorkspaces: configIgnoreWorkspaces,
+					entry: configEntry,
+					ignoreIssues: configIgnoreIssues,
+					workspaces: configWorkspaces = {},
+					...configRest
+				},
+			) => ({
+				...(entry !== undefined || configEntry !== undefined
+					? { entry: [...arraify(entry), ...arraify(configEntry)] }
+					: {}),
+				ignore: [...arraify(ignore), ...arraify(configIgnore)],
+				ignoreBinaries: [
+					...arraify(ignoreBinaries),
+					...arraify(configIgnoreBinaries),
+				],
+				ignoreDependencies: [
+					...arraify(ignoreDependencies),
+					...arraify(configIgnoreDependencies),
+				],
+				ignoreFiles: [...arraify(ignoreFiles), ...arraify(configIgnoreFiles)],
+				ignoreIssues: {
+					...ignoreIssues,
+					...mapValues(configIgnoreIssues ?? {}, (issues, pattern) => [
+						...new Set([...(ignoreIssues?.[pattern] ?? []), ...issues]),
+					]),
+				},
+				ignoreMembers: [
+					...arraify(ignoreMembers),
+					...arraify(configIgnoreMembers),
+				],
+				ignoreUnresolved: [
+					...arraify(ignoreUnresolved),
+					...arraify(configIgnoreUnresolved),
+				],
+				ignoreWorkspaces: [
+					...arraify(ignoreWorkspaces),
+					...arraify(configIgnoreWorkspaces),
+				],
+				include: { ...include, ...configInclude },
+				workspaces: {
+					...mapValues(workspaces, (workspace, key) => ({
+						...workspace,
+						...configWorkspaces[key],
+						...(workspace.entry !== undefined ||
+						configWorkspaces[key]?.entry !== undefined
+							? {
+									entry: [
+										...arraify(workspace.entry),
+										...arraify(configWorkspaces[key]?.entry),
+									],
+								}
+							: {}),
+						ignore: [
+							...arraify(workspace.ignore),
+							...arraify(configWorkspaces[key]?.ignore),
+						],
+						ignoreFiles: [
+							...arraify(workspace.ignoreFiles),
+							...arraify(configWorkspaces[key]?.ignoreFiles),
+						],
+					})),
+					...omitBy(configWorkspaces, (_value, key) =>
+						Boolean(workspaces[key]),
+					),
+				},
+				...rest,
+				...configRest,
+			}),
+			{},
+		);
+	return {
+		...mergedConfig,
+		include: Object.entries(mergedInclude)
+			.filter(([, value]) => value)
+			.map(([key]) => key as NonNullable<KnipConfig["include"]>[number]),
+	};
+};
 
 type BaseOptions = {
 	vitest?: boolean;
@@ -130,23 +191,32 @@ const getIgnoredConfig = async (ignoreIfPresent: string[]) => {
 type ConfigOptions = {
 	options?: BaseOptions;
 	ignoreIfPresent?: string[];
+	ignoreHints?: string[];
 } & MergableConfig;
 export const getConfig = async ({
 	options,
 	ignoreIfPresent = [],
+	ignoreHints = [],
+	preprocessor,
+	preprocessorOptions,
 	...overrides
 }: ConfigOptions = {}): Promise<KnipConfig> => {
 	const baseConfig = getBaseConfig(options);
-	const { include: includeRecord = {}, ...mergedConfig } = mergeConfigs(
+	return mergeConfigs(
 		baseConfig,
 		await getIgnoredConfig(ignoreIfPresent),
 		overrides,
+		{
+			preprocessor: [
+				fileURLToPath(
+					new URL(
+						`knip-preprocessor${path.extname(import.meta.url)}`,
+						import.meta.url,
+					),
+				),
+				...arraify(preprocessor),
+			],
+			preprocessorOptions: { ...preprocessorOptions, ignoreHints },
+		},
 	);
-
-	return {
-		...mergedConfig,
-		include: Object.entries(includeRecord)
-			.filter(([, value]) => value)
-			.map(([key]) => key as NonNullable<KnipConfig["include"]>[number]),
-	};
 };
