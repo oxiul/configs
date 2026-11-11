@@ -1,5 +1,11 @@
 # @oxiul/configs
 
+## 0.4.2
+
+### Patch Changes
+
+- [`498c57b`](https://github.com/oxiul/configs/commit/498c57be4b167af3e68894038fa78f871fe31fa6) Thanks [@luixo](https://github.com/luixo)! - Knip updates
+
 ## 0.4.1
 
 ### Patch Changes
